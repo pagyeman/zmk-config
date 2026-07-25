@@ -5,123 +5,140 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/pointing.h>
 
 / {
-    chosen {
-        zmk,physical-layout = &default_layout;
-    };
+    chosen { zmk,physical-layout = &default_layout; };
 };
 
 / {
+    behaviors {
+        td_shift: td_shift {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_SHIFT";
+            #binding-cells = <0>;
+            bindings = <&kp LEFT_SHIFT>, <&kp CAPS>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             display-name = "QWERTY";
+
             // --------------------------------------------------------------------------------
             // |  TAB |  Q  |  W  |  E  |  R  |  T  |  MUTE |  PP   |  Y  |  U   |  I  |  O  |  P  | BSPC |
             // | CTRL |  A  |  S  |  D  |  F  |  G  |  LALT |  RALT |  H  |  J   |  K  |  L  |  ;  |  '   |
             // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
             //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
+
             bindings = <
-                &kp TAB   &kp Q &kp W &kp E &kp R &kp T &kp C_MUTE &kp C_PP &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-                &kp LCTRL &kp A &kp S &kp D &kp F &kp G &kp LALT   &kp RALT &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B                     &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                      &kp LGUI &mo 1 &kp SPACE              &kp RET &mo 2 &kp RALT
+&none         &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none          &kp J                   &kp L        &kp U      &kp Z    &bl BL_TOG        &none
+&kp TAB       &kp A  &kp R  &kp S     &kp T      &kp G         &kp LS(N6)  &kp BACKSLASH  &kp M                   &kp N        &kp E      &kp I    &kp O             &kp RS(RIGHT_BRACKET)
+&kp LEFT_ALT  &kp Y  &kp X  &kp C     &kp D      &kp V                                    &kp K                   &kp H        &kp COMMA  &kp DOT  &kp RS(NUMBER_7)  &kp RS(MINUS)
+                            &kp LGUI  &td_shift  &lt 2 ESCAPE                             &mt LEFT_CONTROL ENTER  &lt 1 SPACE  &kp RALT
             >;
-            sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN &inc_dec_kp C_PREV C_NEXT &inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
 
         lower_layer {
             display-name = "NUMBER";
+
             // -----------------------------------------------------------------------------------------
             // |  TAB |  1  |  2  |  3  |  4  |  5    |  LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  | BSPC |
             // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | DWN |  UP | RGT |     |      |
             // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
             //                    | GUI |     | SPC   |        | ENT   |     | ALT |
+
             bindings = <
-                &kp TAB   &kp N1       &kp N2          &kp N3       &kp N4       &kp N5       &kp LCTRL &kp RCTRL &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-                &kp LCTRL &bt BT_SEL 0 &bt BT_SEL 1    &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &kp LALT  &kp RALT  &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-                &kp LSHFT &bt BT_CLR   &rgb_ug RGB_TOG &sys_reset   &bootloader  &studio_unlock                   &trans   &trans   &trans &trans    &trans &trans
-                                                       &kp LGUI     &trans       &kp SPACE                        &kp LGUI &trans   &kp SPACE
+&kp MINUS         &kp RIGHT_BRACKET  &kp RA(G)   &kp RA(NUMBER_8)  &kp RA(NUMBER_9)  &kp RA(NUMBER_7)  &studio_unlock  &none  &none  &none   &none  &none  &none  &none
+&kp LS(NUMBER_2)  &kp RA(NUMBER_3)   &kp DOLLAR  &kp LS(NUMBER_8)  &kp LS(NUMBER_9)  &kp RS(EQUAL)     &none           &none  &none  &sl 3   &sl 4  &none  &none  &none
+&none             &kp RS(NUMBER_5)   &kp EQUAL   &kp RA(NUMBER_5)  &kp RA(NUMBER_6)  &kp RA(N)                                &none  &none   &none  &none  &none  &none
+                                                 &none             &kp RS(SLASH)     &kp BACKSPACE                            &none  &trans  &none
             >;
+
+            label = "BRACKETS";
         };
 
         raise_layer {
             display-name = "SYMBOL";
+
             // -----------------------------------------------------------------------------------------
             // |  TAB |  !  |  @  |  #  |  $  |  %  | LCTRL | RCTRL |  ^  |  &  |  *  |  (  |  )  | BSPC |
             // | CTRL | HUD | HUI |     |     |     |  LALT | RALT  |  -  |  =  |  [  |  ]  |  \  |  `   |
             // | SHFT |     |     |     |     |     |               |  _  |  +  |  {  |  }  | "|" |  ~   |
             //                    | GUI |     | SPC |               | ENT |     | ALT |
+
             bindings = <
-                &kp  TAB  &kp EXCL        &kp AT          &kp HASH &kp DLLR &kp PRCNT &kp LCTRL &kp RCTRL &kp CARET &kp AMPS  &kp ASTRK &kp LPAR &kp RPAR &kp BSPC
-                &kp LCTRL &rgb_ug RGB_HUD &rgb_ug RGB_HUI &trans   &trans   &trans    &kp LALT  &kp RALT  &kp MINUS &kp EQUAL &kp LBKT  &kp RBKT &kp BSLH &kp GRAVE
-                &kp LSHFT &trans          &trans          &trans   &trans   &trans                        &kp UNDER &kp PLUS  &kp LBRC  &kp RBRC &kp PIPE &kp TILDE
-                                                          &kp LGUI &trans   &kp SPACE                     &kp RET   &trans    &kp RALT
+&none  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2   &none   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9      &kp RS(NUMBER_3)  &none
+&none  &none  &none         &kp GRAVE     &kp LS(GRAVE)  &none   &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp LS(KP_NUMBER_6)  &kp RS(NUMBER_1)  &none
+&none  &none  &none         &none         &none          &none                 &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3      &none             &none
+                            &none         &none          &trans                &kp RS(NUMBER_0)  &kp NUMBER_0     &none
             >;
+
+            label = "NUMBERS";
         };
 
         extra_layer_1 {
             display-name = "EXTRA 1";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&none  &none         &none             &none         &none           &none  &none  &none  &none  &kp PAGE_UP  &kp UP_ARROW  &kp PAGE_DOWN  &none  &none
+&none  &kp LEFT_GUI  &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &kp LEFT     &kp DOWN      &kp RIGHT      &none  &none
+&none  &none         &none             &none         &none           &none                &none  &none        &none         &none          &none  &none
+                                       &none         &none           &none                &none  &tog 3       &none
             >;
         };
 
         extra_layer_2 {
             display-name = "EXTRA 2";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&none  &none          &none              &none         &none           &none  &none  &none  &none  &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none  &none
+&none  &kp RIGHT_GUI  &kp RIGHT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none
+&none  &none          &none              &none         &none           &none                &none  &msc SCRL_UP    &none           &msc SCRL_DOWN   &none  &none
+                                         &none         &none           &none                &none  &tog 4          &none
             >;
         };
 
         extra_layer_3 {
             display-name = "EXTRA 3";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_4 {
             display-name = "EXTRA 4";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_5 {
             display-name = "EXTRA 5";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
 
         extra_layer_6 {
             display-name = "EXTRA 6";
             bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans
-                                     &trans &trans &trans               &trans &trans &trans       
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans                  &trans  &trans  &trans
             >;
         };
     };

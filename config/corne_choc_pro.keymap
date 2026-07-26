@@ -30,11 +30,11 @@
         default_layer {
             display-name = "QWERTY";
 
-            // --------------------------------------------------------------------------------
-            // |  TAB |  Q  |  W  |  E  |  R  |  T  |  MUTE |  PP   |  Y  |  U   |  I  |  O  |  P  | BSPC |
-            // | CTRL |  A  |  S  |  D  |  F  |  G  |  LALT |  RALT |  H  |  J   |  K  |  L  |  ;  |  '   |
-            // | SHFT |  Z  |  X  |  C  |  V  |  B  |               |  N  |  M   |  ,  |  .  |  /  | ESC  |
-            //                    | GUI | LWR | SPC |               | ENT | RSE  | ALT |
+            // ---------------------------------------------------------------------------------------------------------------------
+            // |      |  Q  |  W  |  F  |  P   |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  |      |
+            // | TAB  |  A  |  R  |  S  |  T   |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !   |
+            // | LALT |  Z  |  X  |  C  |  D   |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?   |
+            //                    | GUI | SHFT | ESC/Layer2 |             | ENT/CTRL | SPACE/Layer1 | ALT |
 
             bindings = <
 &none         &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none          &kp J                   &kp L        &kp U      &kp Z    &bl BL_TOG        &none
@@ -45,32 +45,30 @@
         };
 
         lower_layer {
-            display-name = "NUMBER";
+            display-name = "BRACKET";
 
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  1  |  2  |  3  |  4  |  5    |  LCTRL | RCTRL |  6  |  7  |  8  |  9  |  0  | BSPC |
-            // | CTRL | BT1 | BT2 | BT3 | BT4 | BT5   |  LALT  | RALT  | LFT | DWN |  UP | RGT |     |      |
-            // | SHFT | BTCR| RGB | RST | BOOT| Unlock|        |       |     |     |     |     |     |      |
-            //                    | GUI |     | SPC   |        | ENT   |     | ALT |
+            // ----------------------------------------------------------------------------------------------------------
+            // |  '   |  ¨   |  @   |   {   |  }   |  |   | Unlock |      |      |        |        |      |      |      |
+            // |  "   |  #   |  $   |   (   |  )   |  `   |        |      |      | Layer3 | Layer4 |      |      |      |
+            // |      |  %   |  ^   |   [   |  ]   |  ~   |               |      |        |        |      |      |      |
+            //                      |       |  _   | BKSP |               |      | Trans  |        |
 
             bindings = <
 &kp MINUS         &kp RIGHT_BRACKET  &kp RA(G)   &kp RA(NUMBER_8)  &kp RA(NUMBER_9)  &kp RA(NUMBER_7)  &studio_unlock  &none  &none  &none   &none  &none  &none  &none
-&kp LS(NUMBER_2)  &kp RA(NUMBER_3)   &kp DOLLAR  &kp LS(NUMBER_8)  &kp LS(NUMBER_9)  &kp RS(EQUAL)     &none           &none  &none  &sl 3   &sl 4  &none  &none  &none
+&kp LS(NUMBER_2)  &kp RA(NUMBER_3)   &kp DOLLAR  &kp LS(NUMBER_8)  &kp LS(NUMBER_9)  &kp RS(EQUAL)     &none           &none  &none  &tog 3  &tog 4 &none  &none  &none
 &none             &kp RS(NUMBER_5)   &kp EQUAL   &kp RA(NUMBER_5)  &kp RA(NUMBER_6)  &kp RA(N)                                &none  &none   &none  &none  &none  &none
                                                  &none             &kp RS(SLASH)     &kp BACKSPACE                            &none  &trans  &none
             >;
-
-            label = "BRACKETS";
         };
 
         raise_layer {
-            display-name = "SYMBOL";
+            display-name = "NUMBER";
 
-            // -----------------------------------------------------------------------------------------
-            // |  TAB |  !  |  @  |  #  |  $  |  %  | LCTRL | RCTRL |  ^  |  &  |  *  |  (  |  )  | BSPC |
-            // | CTRL | HUD | HUI |     |     |     |  LALT | RALT  |  -  |  =  |  [  |  ]  |  \  |  `   |
-            // | SHFT |     |     |     |     |     |               |  _  |  +  |  {  |  }  | "|" |  ~   |
-            //                    | GUI |     | SPC |               | ENT |     | ALT |
+            // ---------------------------------------------------------------------------------------------------
+            // |      |      | BT 0 | BT 1 | BT 2 |       |      |      |  /   |  7   |  8   |  9  |  *   |      |
+            // |      |      |      |  <   |  >   |       |      |      |  -   |  4   |  5   |  6  |  +   |      |
+            // |      |      |      |      |      |       |             |      |  1   |  2   |  3  |      |      |
+            //                      |      |      | Trans |             |  =   |  0   |      |
 
             bindings = <
 &none  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2   &none   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9      &kp RS(NUMBER_3)  &none
@@ -78,12 +76,17 @@
 &none  &none  &none         &none         &none          &none                 &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3      &none             &none
                             &none         &none          &trans                &kp RS(NUMBER_0)  &kp NUMBER_0     &none
             >;
-
-            label = "NUMBERS";
         };
 
         extra_layer_1 {
-            display-name = "EXTRA 1";
+            display-name = "ARROWKEY";
+
+            // ---------------------------------------------------------------------------------------------------------------------
+            // |       |       |       |       |       |       |       |       |       | PG-UP   |  UP   | PG-DOWN |       |       |
+            // |       | CMD   | CTRL  | LALT  | SHIFT |       |       |       |       | LEFT    | DOWN  | RIGHT   |       |       |
+            // |       |       |       |       |       |       |               |       |         |       |         |       |       |
+            //                         |       |       |       |               |       | Layer 3 |       |
+
             bindings = <
 &none  &none         &none             &none         &none           &none  &none  &none  &none  &kp PAGE_UP  &kp UP_ARROW  &kp PAGE_DOWN  &none  &none
 &none  &kp LEFT_GUI  &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &kp LEFT     &kp DOWN      &kp RIGHT      &none  &none
@@ -93,7 +96,14 @@
         };
 
         extra_layer_2 {
-            display-name = "EXTRA 2";
+            display-name = "MOUSE";
+
+            // ------------------------------------------------------------------------------------------------------------------------------------
+            // |       |       |       |       |       |       |       |       |       | LClick     | Mouse-UP    | RClick        |       |       |
+            // |       | CMD   | CTRL  | LALT  | SHIFT |       |       |       |       | Mouse-LEFT | Mouse-DOWN  | Mouse-RIGHT   |       |       |
+            // |       |       |       |       |       |       |               |       | Scroll-Up  |             | Scroll-Down   |       |       |
+            //                         |       |       |       |               |       | Layer 4    |             |
+            
             bindings = <
 &none  &none          &none              &none         &none           &none  &none  &none  &none  &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none  &none
 &none  &kp RIGHT_GUI  &kp RIGHT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none

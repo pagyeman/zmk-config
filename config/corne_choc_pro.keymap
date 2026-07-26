@@ -30,11 +30,11 @@
         default_layer {
             display-name = "QWERTY";
 
-            // ---------------------------------------------------------------------------------------------------------------------
-            // |      |  Q  |  W  |  F  |  P   |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  |      |
-            // | TAB  |  A  |  R  |  S  |  T   |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !   |
-            // | LALT |  Z  |  X  |  C  |  D   |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?   |
-            //                    | GUI | SHFT | ESC/Layer2 |             | ENT/CTRL | SPACE/Layer1 | ALT |
+            // --------------------------------------------------------------------------------------------------------------------------
+            // |      |  Q  |  W  |  F  |  P        |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  |      |
+            // | TAB  |  A  |  R  |  S  |  T        |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !   |
+            // | LALT |  Z  |  X  |  C  |  D        |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?   |
+            //                    | GUI | SHFT/CAPS | ESC/Layer2 |             | ENT/CTRL | SPACE/Layer1 | ALT |
 
             bindings = <
 &none         &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none          &kp J                   &kp L        &kp U      &kp Z    &bl BL_TOG        &none

@@ -64,17 +64,17 @@
         raise_layer {
             display-name = "NUMBER";
 
-            // ---------------------------------------------------------------------------------------------------
-            // |      |      | BT 0 | BT 1 | BT 2 |       |      |      |  /   |  7   |  8   |  9  |  *   |      |
-            // |      |      |      |  <   |  >   |       |      |      |  -   |  4   |  5   |  6  |  +   |      |
-            // |      |      |      |      |      |       |             |      |  1   |  2   |  3  |      |      |
-            //                      |      |      | Trans |             |  =   |  0   |      |
+            // ----------------------------------------------------------------------------------------------------
+            // |      |      | BT 0 | BT 1 | BT 2 | BT CLR |      |      |  /   |  7   |  8   |  9  |  *   |      |
+            // |      |      |      |  <   |  >   |        |      |      |  -   |  4   |  5   |  6  |  +   |      |
+            // |      |      |      |      |      |        |             |      |  1   |  2   |  3  |      |      |
+            //                      |      |      | Trans  |             |  =   |  0   |      |
 
             bindings = <
-&none  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2   &none   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9      &kp RS(NUMBER_3)  &none
-&none  &none  &none         &kp GRAVE     &kp LS(GRAVE)  &none   &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp LS(KP_NUMBER_6)  &kp RS(NUMBER_1)  &none
-&none  &none  &none         &none         &none          &none                 &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3      &none             &none
-                            &none         &none          &trans                &kp RS(NUMBER_0)  &kp NUMBER_0     &none
+&none  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2   &bt BT_CLEAR   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9      &kp RS(NUMBER_3)  &none
+&none  &none  &none         &kp GRAVE     &kp LS(GRAVE)  &none          &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp LS(KP_NUMBER_6)  &kp RS(NUMBER_1)  &none
+&none  &none  &none         &none         &none          &none                        &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3      &none             &none
+                            &none         &none          &trans                       &kp RS(NUMBER_0)  &kp NUMBER_0     &none
             >;
         };
 

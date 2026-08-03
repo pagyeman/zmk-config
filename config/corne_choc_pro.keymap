@@ -24,6 +24,22 @@
         };
     };
 
+    macros {
+        // switch to BT profile and set the active layer at the same time
+        // we use parameters to avoid duplication of code
+        bt_sel_layer: bt_sel_layer {
+            compatible = "zmk,behavior-macro";
+            wait-ms = <0>; // we want immediate action, without delay
+            tap-ms = <0>;  // don't tap for long
+            #binding-cells = <2>;
+            bindings
+            = <&macro_param_1to1>
+            , <&bt BT_SEL MACRO_PLACEHOLDER>
+            , <&macro_param_2to1>
+            , <&to MACRO_PLACEHOLDER>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -71,10 +87,10 @@
             //                      |      |      | Trans  |             |  =   |  0   |      |
 
             bindings = <
-&none  &none  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9      &kp RS(NUMBER_3)  &none
-&none  &none  &none         &kp GRAVE     &kp LS(GRAVE)  &none          &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp LS(KP_NUMBER_6)  &kp RS(NUMBER_1)  &none
-&none  &none  &none         &none         &none          &none                        &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3      &none             &none
-                            &none         &none          &trans                       &kp RS(NUMBER_0)  &kp NUMBER_0     &none
+&none  &none  &bt_sel_layer 0 0  &bt_sel_layer 1 5  &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp RS(NUMBER_3)  &none
+&none  &none  &none              &kp GRAVE          &kp LS(GRAVE)  &none        &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp RS(NUMBER_1)  &none
+&none  &none  &none              &none              &none          &none                      &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &none             &none
+                                 &none              &none          &trans                     &kp RS(NUMBER_0)  &kp NUMBER_0     &none
             >;
         };
 
@@ -113,32 +129,53 @@
         };
 
         extra_layer_3 {
-            display-name = "EXTRA 3";
+            display-name = "PCQWERTY";
+
+            // --------------------------------------------------------------------------------------------------------------------------
+            // |      |  Q  |  W  |  F  |  P        |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  |      |
+            // | TAB  |  A  |  R  |  S  |  T        |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !   |
+            // | LALT |  Z  |  X  |  C  |  D        |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?   |
+            //                    | GUI | SHFT/CAPS | ESC/Layer2 |             | ENT/CTRL | SPACE/Layer1 | ALT |
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans                  &trans  &trans  &trans
+&none         &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none          &kp J                   &kp L        &kp U      &kp Z    &bl BL_TOG        &none
+&kp TAB       &kp A  &kp R  &kp S     &kp T      &kp G         &kp LS(N6)  &kp BACKSLASH  &kp M                   &kp N        &kp E      &kp I    &kp O             &kp RS(RIGHT_BRACKET)
+&kp LEFT_ALT  &kp Y  &kp X  &kp C     &kp D      &kp V                                    &kp K                   &kp H        &kp COMMA  &kp DOT  &kp RS(NUMBER_7)  &kp RS(MINUS)
+                            &kp LGUI  &td_shift  &lt 2 ESCAPE                             &mt LEFT_CONTROL ENTER  &lt 6 SPACE  &kp RALT
             >;
         };
 
         extra_layer_4 {
-            display-name = "EXTRA 4";
+            display-name = "PCBRACKET";
+
+            // ----------------------------------------------------------------------------------------------------------
+            // |  '   |  ¨   |  @   |   {   |  }   |  |   | Unlock |      |      |        |        |      |      |      |
+            // |  "   |  #   |  $   |   (   |  )   |  `   |        |      |      | Layer3 | Layer4 |      |      |      |
+            // |      |  %   |  ^   |   [   |  ]   |  ~   |               |      |        |        |      |      |      |
+            //                      |       |  _   | BKSP |               |      | Trans  |        |
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans                  &trans  &trans  &trans
+&kp MINUS         &kp RIGHT_BRACKET  &kp RA(G)   &kp RA(NUMBER_8)  &kp RA(NUMBER_9)  &kp RA(NUMBER_7)  &studio_unlock  &none  &none  &none   &none  &none  &none  &none
+&kp LS(NUMBER_2)  &kp RA(NUMBER_3)   &kp DOLLAR  &kp LS(NUMBER_8)  &kp LS(NUMBER_9)  &kp RS(EQUAL)     &none           &none  &none  &tog 3  &tog 4 &none  &none  &none
+&none             &kp RS(NUMBER_5)   &kp EQUAL   &kp RA(NUMBER_5)  &kp RA(NUMBER_6)  &kp RA(N)                                &none  &none   &none  &none  &none  &none
+                                                 &none             &kp RS(SLASH)     &kp BACKSPACE                            &none  &trans  &none
             >;
         };
 
         extra_layer_5 {
-            display-name = "EXTRA 5";
+            display-name = "PCNUMBER";
+
+            // ----------------------------------------------------------------------------------------------------
+            // |      |      | BT 0 | BT 1 | BT 2 | BT CLR |      |      |  /   |  7   |  8   |  9  |  *   |      |
+            // |      |      |      |  <   |  >   |        |      |      |  -   |  4   |  5   |  6  |  +   |      |
+            // |      |      |      |      |      |        |             |      |  1   |  2   |  3  |      |      |
+            //                      |      |      | Trans  |             |  =   |  0   |      |
+
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans                  &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans                  &trans  &trans  &trans
+&none  &none  &bt_sel_layer 0 0  &bt_sel_layer 1 5  &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(NUMBER_7)  &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp RS(NUMBER_3)  &none
+&none  &none  &none              &kp GRAVE          &kp LS(GRAVE)  &none        &none  &none  &kp SLASH         &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp RS(NUMBER_1)  &none
+&none  &none  &none              &none              &none          &none                      &none             &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &none             &none
+                                 &none              &none          &trans                     &kp RS(NUMBER_0)  &kp NUMBER_0     &none
             >;
         };
 

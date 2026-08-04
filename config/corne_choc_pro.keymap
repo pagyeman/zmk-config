@@ -26,7 +26,7 @@
         mm_slash: mm_slash {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp SLASH>, <&kp RALT(NUBS)>;
+            bindings = <&kp LS(N7)>, <&kp RALT(NUBS)>;
             mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
@@ -52,24 +52,58 @@
         compatible = "zmk,keymap";
 
         default_layer {
-            display-name = "QWERTY";
+            display-name = "MACQWERTY";
 
             // --------------------------------------------------------------------------------------------------------------------------
             // |      |  Q  |  W  |  F  |  P        |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  |      |
             // | TAB  |  A  |  R  |  S  |  T        |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !   |
             // | LALT |  Z  |  X  |  C  |  D        |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?   |
-            //                    | GUI | SHFT/CAPS | ESC/Layer2 |             | ENT/CTRL | SPACE/Layer1 | ALT |
+            //                    | GUI | SHFT/CAPS | ESC/Layer4 |             | ENT/CTRL | SPACE/Layer2 | ALT |
 
             bindings = <
 &none     &kp Q  &kp W  &kp F     &kp P      &kp B      &none       &none     &kp J            &kp L        &kp U      &kp Z    &bl BL_TOG  &none
 &kp TAB   &kp A  &kp R  &kp S     &kp T      &kp G      &kp LS(N6)  &kp BSLH  &kp M            &kp N        &kp E      &kp I    &kp O       &kp RS(RBKT)
 &kp LALT  &kp Y  &kp X  &kp C     &kp D      &kp V                            &kp K            &kp H        &kp COMMA  &kp DOT  &kp RS(N7)  &kp RS(MINUS)
-                        &kp LGUI  &td_shift  &lt 2 ESC                        &mt LCTRL ENTER  &lt 1 SPACE  &kp RALT
+                        &kp LGUI  &td_shift  &lt 4 ESC                        &mt LCTRL ENTER  &lt 2 SPACE  &kp RALT
             >;
         };
 
         lower_layer {
-            display-name = "BRACKET";
+            display-name = "PCQWERTY";
+
+            // ----------------------------------------------------------------------------------------------------------------------------------
+            // |      |  Q  |  W  |  F  |  P        |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  | Print Screen |
+            // | TAB  |  A  |  R  |  S  |  T        |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !           |
+            // | LALT |  Z  |  X  |  C  |  D        |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?           |
+            //                    | GUI | SHFT/CAPS | ESC/Layer5 |             | ENT/CTRL | SPACE/Layer3 | ALT |
+
+            bindings = <
+&none     &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none     &kp J            &kp L        &kp U      &kp Z    &bl BL_TOG  &kp PSCRN
+&kp TAB   &kp A  &kp R  &kp S     &kp T      &kp G         &kp LS(N6)  &kp BSLH  &kp M            &kp N        &kp E      &kp I    &kp O       &kp RS(RBKT)
+&kp LALT  &kp Y  &kp X  &kp C     &kp D      &kp V                               &kp K            &kp H        &kp COMMA  &kp DOT  &mm_slash   &kp RS(MINUS)
+                        &kp LGUI  &td_shift  &lt 5 ESC                           &mt LCTRL ENTER  &lt 3 SPACE  &kp RALT
+            >;
+        };
+
+        raise_layer {
+            display-name = "MACBRACKET";
+
+            // ----------------------------------------------------------------------------------------------------------
+            // |  '   |  ¨   |  @   |   {   |  }   |  |   | Unlock |      |      |        |        |      |      |      |
+            // |  "   |  #   |  $   |   (   |  )   |  `   |        |      |      | Layer6 | Layer7 |      |      |      |
+            // |      |  %   |  ^   |   [   |  ]   |  ~   |               |      |        |        |      |      |      |
+            //                      |       |  _   | BKSP |               |      | Trans  |        |
+
+            bindings = <
+&kp MINUS   &kp RIGHT_BRACKET  &kp RA(G)   &kp RA(N8)  &kp RA(N9)     &kp RA(N7)     &studio_unlock  &none  &none  &none   &none  &none  &none  &none
+&kp LS(N2)  &kp RA(N3)         &kp DOLLAR  &kp LS(N8)  &kp LS(N9)     &kp RS(EQUAL)  &none           &none  &none  &tog 6  &tog 7 &none  &none  &none
+&none       &kp RS(N5)         &kp EQUAL   &kp RA(N5)  &kp RA(N6)     &kp RA(N)                             &none  &none   &none  &none  &none  &none
+                                           &none       &kp RS(SLASH)  &kp BSPC                              &none  &trans  &none
+            >;
+        };
+
+        extra_layer_1 {
+            display-name = "PCBRACKET";
 
             // ----------------------------------------------------------------------------------------------------------
             // |  '   |  ¨   |  @   |   {   |  }   |  |   | Unlock |      |      |        |        |      |      |      |
@@ -78,15 +112,15 @@
             //                      |       |  _   | BKSP |               |      | Trans  |        |
 
             bindings = <
-&kp MINUS   &kp RIGHT_BRACKET  &kp RA(G)   &kp RA(N8)  &kp RA(N9)     &kp RA(N7)     &studio_unlock  &none  &none  &none   &none  &none  &none  &none
-&kp LS(N2)  &kp RA(N3)         &kp DOLLAR  &kp LS(N8)  &kp LS(N9)     &kp RS(EQUAL)  &none           &none  &none  &tog 3  &tog 4 &none  &none  &none
-&none       &kp RS(N5)         &kp EQUAL   &kp RA(N5)  &kp RA(N6)     &kp RA(N)                             &none  &none   &none  &none  &none  &none
-                                           &none       &kp RS(SLASH)  &kp BSPC                              &none  &trans  &none
+&kp MINUS   &kp RIGHT_BRACKET  &kp RA(N2)  &kp RA(APOS)  &kp RA(BSLH)   &kp RA(N7)     &studio_unlock  &none  &none  &none   &none  &none  &none  &none
+&kp LS(N2)  &kp RA(N3)         &kp BSLH    &kp LS(N8)    &kp LS(N9)     &kp RS(EQUAL)  &none           &none  &none  &tog 6  &tog 7 &none  &none  &none
+&none       &kp RS(N5)         &kp EQUAL   &kp RA(LBKT)  &kp RA(RBKT)   &kp RA(EQUAL)                         &none  &none   &none  &none  &none  &none
+                                           &none         &kp RS(SLASH)  &kp BACKSPACE                         &none  &trans  &none
             >;
         };
 
-        raise_layer {
-            display-name = "NUMBER";
+        extra_layer_2 {
+            display-name = "MACNUMBER";
 
             // ----------------------------------------------------------------------------------------------------
             // |      |      | BT 0 | BT 1 | BT 2 | BT CLR |      |      |  /   |  7   |  8   |  9  |  *   |      |
@@ -95,14 +129,31 @@
             //                      |      |      | Trans  |             |  =   |  0   |      |
 
             bindings = <
-&none  &none  &tbl 0 0  &tbl 1 5   &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(N7)  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp RS(N3)  &none
+&none  &none  &tbl 0 0  &tbl 1 1   &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(N7)  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp RS(N3)  &none
 &none  &none  &none     &kp GRAVE  &kp LS(GRAVE)  &none        &none  &none  &kp SLASH   &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp RS(N1)  &none
 &none  &none  &none     &none      &none          &none                      &none       &kp KP_N1  &kp KP_N2  &kp KP_N3  &none       &none
                         &none      &none          &trans                     &kp RS(N0)  &kp N0     &none
             >;
         };
 
-        extra_layer_1 {
+        extra_layer_3 {
+            display-name = "PCNUMBER";
+
+            // ----------------------------------------------------------------------------------------------------
+            // |      |      | BT 0 | BT 1 | BT 2 | BT CLR |      |      |  /   |  7   |  8   |  9  |  *   |      |
+            // |      |      |      |  <   |  >   |        |      |      |  -   |  4   |  5   |  6  |  +   |      |
+            // |      |      |      |      |      |        |             |      |  1   |  2   |  3  |      |      |
+            //                      |      |      | Trans  |             |  =   |  0   |      |
+
+            bindings = <
+&none  &none  &tbl 0 0  &tbl 1 1   &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(N7)  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp RS(N3)  &none
+&none  &none  &none     &kp NUBS   &kp LS(NUBS)   &none        &none  &none  &kp SLASH   &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp RS(N1)  &none
+&none  &none  &none     &none      &none          &none                      &none       &kp KP_N1  &kp KP_N2  &kp KP_N3  &none       &none
+                        &none      &none          &trans                     &kp RS(N0)  &kp N0     &none
+            >;
+        };
+
+        extra_layer_4 {
             display-name = "ARROWKEY";
 
             // ---------------------------------------------------------------------------------------------------------------------
@@ -115,11 +166,11 @@
 &none  &none         &none             &none         &none           &none  &none  &none  &none  &kp PAGE_UP  &kp UP_ARROW  &kp PAGE_DOWN  &none  &none
 &none  &kp LEFT_GUI  &kp LEFT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &kp LEFT     &kp DOWN      &kp RIGHT      &none  &none
 &none  &none         &none             &none         &none           &none                &none  &none        &none         &none          &none  &none
-                                       &none         &none           &none                &none  &tog 3       &none
+                                       &none         &none           &none                &none  &tog 6       &none
             >;
         };
 
-        extra_layer_2 {
+        extra_layer_5 {
             display-name = "MOUSE";
 
             // ------------------------------------------------------------------------------------------------------------------------------------
@@ -132,58 +183,7 @@
 &none  &none          &none              &none         &none           &none  &none  &none  &none  &mkp LCLK       &mmv MOVE_UP    &mkp RCLK        &none  &none
 &none  &kp RIGHT_GUI  &kp RIGHT_CONTROL  &kp LEFT_ALT  &kp LEFT_SHIFT  &none  &none  &none  &none  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none
 &none  &none          &none              &none         &none           &none                &none  &msc SCRL_UP    &none           &msc SCRL_DOWN   &none  &none
-                                         &none         &none           &none                &none  &tog 4          &none
-            >;
-        };
-
-        extra_layer_3 {
-            display-name = "PCQWERTY";
-
-            // --------------------------------------------------------------------------------------------------------------------------
-            // |      |  Q  |  W  |  F  |  P        |  B         |      |      |  J       |  L           |  U  |  Y  |  TG glow  | Print Screen |
-            // | TAB  |  A  |  R  |  S  |  T        |  G         |   &  |   $  |  M       |  N           |  E  |  I  |  O        |  !           |
-            // | LALT |  Z  |  X  |  C  |  D        |  V         |             |  K       |  H           |  ,  |  .  |  /        |  ?           |
-            //                    | GUI | SHFT/CAPS | ESC/Layer7 |             | ENT/CTRL | SPACE/Layer6 | ALT |
-
-            bindings = <
-&none     &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none     &kp J            &kp L        &kp U      &kp Z    &bl BL_TOG  &kp PSCRN
-&kp TAB   &kp A  &kp R  &kp S     &kp T      &kp G         &kp LS(N6)  &kp APOS  &kp M            &kp N        &kp E      &kp I    &kp O       &kp RS(RBKT)
-&kp LALT  &kp Y  &kp X  &kp C     &kp D      &kp V                               &kp K            &kp H        &kp COMMA  &kp DOT  &mm_slash   &kp RS(MINUS)
-                        &kp LGUI  &td_shift  &lt 7 ESC                           &mt LCTRL ENTER  &lt 6 SPACE  &kp RALT
-            >;
-        };
-
-        extra_layer_4 {
-            display-name = "PCBRACKET";
-
-            // ----------------------------------------------------------------------------------------------------------
-            // |  '   |  ¨   |  @   |   {   |  }   |  |   | Unlock |      |      |        |        |      |      |      |
-            // |  "   |  #   |  $   |   (   |  )   |  `   |        |      |      | Layer3 | Layer4 |      |      |      |
-            // |      |  %   |  ^   |   [   |  ]   |  ~   |               |      |        |        |      |      |      |
-            //                      |       |  _   | BKSP |               |      | Trans  |        |
-
-            bindings = <
-&kp MINUS   &kp RIGHT_BRACKET  &kp RA(N2)  &kp RA(SEMI)  &kp RA(APOS)   &kp RA(N7)     &studio_unlock  &none  &none  &none   &none  &none  &none  &none
-&kp LS(N2)  &kp RA(N3)         &kp DOLLAR  &kp LS(N8)    &kp LS(N9)     &kp RS(EQUAL)  &none           &none  &none  &tog 3  &tog 4 &none  &none  &none
-&none       &kp RS(N5)         &kp EQUAL   &kp RA(LBKT)  &kp RA(RBKT)   &kp RA(EQUAL)                         &none  &none   &none  &none  &none  &none
-                                           &none         &kp RS(SLASH)  &kp BACKSPACE                         &none  &trans  &none
-            >;
-        };
-
-        extra_layer_5 {
-            display-name = "PCNUMBER";
-
-            // ----------------------------------------------------------------------------------------------------
-            // |      |      | BT 0 | BT 1 | BT 2 | BT CLR |      |      |  /   |  7   |  8   |  9  |  *   |      |
-            // |      |      |      |  <   |  >   |        |      |      |  -   |  4   |  5   |  6  |  +   |      |
-            // |      |      |      |      |      |        |             |      |  1   |  2   |  3  |      |      |
-            //                      |      |      | Trans  |             |  =   |  0   |      |
-
-            bindings = <
-&none  &none  &tbl 0 0  &tbl 1 5   &bt BT_SEL 2   &bt BT_CLR   &none  &none  &kp LS(N7)  &kp KP_N7  &kp KP_N8  &kp KP_N9  &kp RS(N3)  &none
-&none  &none  &none     &kp NUBS   &kp LS(NUBS)   &none        &none  &none  &kp SLASH   &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp RS(N1)  &none
-&none  &none  &none     &none      &none          &none                      &none       &kp KP_N1  &kp KP_N2  &kp KP_N3  &none       &none
-                        &none      &none          &trans                     &kp RS(N0)  &kp N0     &none
+                                         &none         &none           &none                &none  &tog 7          &none
             >;
         };
 

@@ -35,7 +35,7 @@
         // switch BT profile and at the same time switch keyboard layer (used to accomodate swiss mac and pc layouts)
         // accepts two parameters
         tbl: tbl {
-            compatible = "zmk,behavior-macro";
+            compatible = "zmk,behavior-macro-two-param";
             wait-ms = <0>;  // no delay when doing both actions
             tap-ms = <0>;  // keys are not pressed for long
             #binding-cells = <2>;
@@ -149,7 +149,7 @@
 &none     &kp Q  &kp W  &kp F     &kp P      &kp B         &none       &none     &kp J            &kp L        &kp U      &kp Z    &bl BL_TOG  &kp PSCRN
 &kp TAB   &kp A  &kp R  &kp S     &kp T      &kp G         &kp LS(N6)  &kp APOS  &kp M            &kp N        &kp E      &kp I    &kp O       &kp RS(RBKT)
 &kp LALT  &kp Y  &kp X  &kp C     &kp D      &kp V                               &kp K            &kp H        &kp COMMA  &kp DOT  &mm_slash   &kp RS(MINUS)
-                        &kp LGUI  &td_shift  &lt 2 ESC                           &mt LCTRL ENTER  &lt 6 SPACE  &kp RALT
+                        &kp LGUI  &td_shift  &lt 7 ESC                           &mt LCTRL ENTER  &lt 6 SPACE  &kp RALT
             >;
         };
 
